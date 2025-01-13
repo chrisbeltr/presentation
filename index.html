@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Presentation</title>
+</head>
+
+<body>
+    <div id="main-content" class="container">
+        <div class="slide">
+            <div class="question">name/year/major/star sign</div>
+            <div class="answer">christian / 3rd year / computer science and maybe not music anymore maybe i just minor
+                it in now idk / i'm a gemini i think</div>
+            <div class="images">
+                <img src="./images/dogs.jpg" alt="dog zodiac signs" style="width: 50%;">
+            </div>
+        </div>
+        <div class="slide">
+            <div class="question">why i'm in this class</div>
+            <div class="answer">i really just wanna do things bro i'm so bored and i hate math</div>
+            <div class="images">
+                <img src="./images/thumbs.webp" alt="thumbs up" style="width: 50%;">
+            </div>
+        </div>
+        <div class="slide"></div>
+        <div class="slide"></div>
+        <div class="slide"></div>
+        <div class="slide"></div>
+        <div class="slide"></div>
+        <div class="slide"></div>
+        <div class="slide"></div>
+        <div class="slide"></div>
+        <div class="slide"></div>
+        <div class="slide"></div>
+        <div class="slide"></div>
+        <div class="slide"></div>
+        <div class="slide"></div>
+        <div class="slide"></div>
+        <div class="slide"></div>
+        <div class="slide"></div>
+        <div class="slide"></div>
+        <div class="slide"></div>
+        <div id="timer">
+        </div>
+        <script>
+            var d = Math.min(window.innerWidth, window.innerHeight);
+            var mainContent = document.getElementById("main-content");
+            mainContent.style.height = mainContent.style.width = `${d}px`;
+
+            window.addEventListener("resize", () => {
+                d = Math.min(window.innerWidth, window.innerHeight);
+                mainContent.style.height = mainContent.style.width = `${d}px`;
+            });
+
+            var slides = document.getElementsByClassName("slide");
+            for (var slide of slides) {
+                slide.addEventListener("wheel", e => { e.stopPropagation() }, true);
+            }
+        </script>
+    </div>
+
+    <script>
+        mainContent.focus();
+        var timer = document.getElementById("timer");
+        var twoDecimal = Intl.NumberFormat(undefined, { minimumFractionDigits: 1, maximumFractionDigits: 2, minimumSignificantDigits: 2, maximumSignificantDigits: 3 });
+        var position = 0;
+        var index = 0;
+        var targetTime;
+        var timerLoop, mainLoop;
+        function stopTimer() {
+            clearInterval(timerLoop);
+            clearInterval(mainLoop);
+            timer.textContent = "";
+            mainContent.style.overflowX = "scroll";
+            mainContent.style.scrollBehavior = "initial";
+        }
+        function startTimer() {
+            position = 0;
+            index = 0;
+            mainContent.scrollLeft = 0;
+            mainContent.style.overflowX = "hidden";
+            mainContent.style.scrollBehavior = "smooth";
+            targetTime = Date.now() + 20000;
+            timerLoop = setInterval(() => {
+                timer.textContent = twoDecimal.format(((targetTime - Date.now()) / 1000));
+                timer.style.left = `${position}px`;
+            }, 0);
+            mainLoop = setInterval(() => {
+                if (index < slides.length - 1) {
+                    index++;
+                    position = d * index;
+                    targetTime += 20000;
+                    mainContent.scrollLeft = position;
+                }
+                if (index == slides.length - 1) {
+                    stopTimer();
+                }
+            }, 20000);
+        }
+        function setStartEvent(e) {
+            if (e.key == "Enter") {
+                startTimer();
+
+                window.removeEventListener("keydown", setStartEvent);
+                window.addEventListener("keydown", setEndEvent);
+            }
+        }
+        function setEndEvent(e) {
+            if (e.key == "Enter") {
+                stopTimer();
+                window.removeEventListener("keydown", setEndEvent);
+                window.addEventListener("keydown", setStartEvent);
+            }
+        }
+        window.addEventListener("keydown", setStartEvent);
+
+    </script>
+
+    <script src="fittext.js"></script>
+    <script>
+        window.fitText(timer, 0.177);
+        timer.style.lineHeight = `${d}px`;
+        window.addEventListener("resize", () => {
+            timer.style.lineHeight = `${d}px`;
+        })
+    </script>
+</body>
+
+</html>
