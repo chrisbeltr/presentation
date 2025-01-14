@@ -67,9 +67,12 @@
         </div>
         <div class="slide">
             <div class="question">something i'm good and bad at</div>
-            <div class="answer">one could say i'm good at composing music (check my out <a
+            <div class="answer">one could say i'm good at composing music (check me out <a
                     href="https://music.borks.dev/reflection">here</a> teehee)</div>
-            <div class="answer">i'm bad at uhhhhh</div>
+            <div class="answer">i'm bad at saying no to people pensive emoji</div>
+            <div class="images">
+                <img src="./images/reflection.jpg" alt="reflection album cover" style="width: 50%;">
+            </div>
         </div>
         <div class="slide">
             <div class="question">ideal work environment</div>
@@ -199,9 +202,7 @@
             mainContent.style.scrollBehavior = "initial";
         }
         function startTimer() {
-            position = 0;
-            index = 0;
-            mainContent.scrollLeft = 0;
+            mainContent.scrollLeft = position;
             mainContent.style.overflowX = "hidden";
             mainContent.style.scrollBehavior = "smooth";
             targetTime = Date.now() + 20000;
@@ -218,6 +219,7 @@
                 }
                 if (index == slides.length - 1) {
                     stopTimer();
+                    setEndEvent();
                 }
             }, 20000);
         }
