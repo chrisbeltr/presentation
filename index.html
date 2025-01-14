@@ -219,7 +219,7 @@
             mainContent.style.scrollBehavior = "smooth";
             targetTime = Date.now() + 20000;
             timerLoop = setInterval(() => {
-                timer.textContent = twoDecimal.format(((targetTime - Date.now()) / 20000));
+                timer.textContent = twoDecimal.format(((targetTime - Date.now()) / 1000));
                 timer.style.left = `${position}px`;
             }, 0);
             mainLoop = setInterval(() => {
