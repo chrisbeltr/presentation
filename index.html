@@ -205,6 +205,7 @@
         var index = 0;
         var targetTime;
         var timerLoop, mainLoop;
+        var startEvent, endEvent;
         function stopTimer() {
             clearInterval(timerLoop);
             clearInterval(mainLoop);
@@ -216,7 +217,7 @@
             mainContent.scrollLeft = position;
             mainContent.style.overflowX = "hidden";
             mainContent.style.scrollBehavior = "smooth";
-            targetTime = Date.now() + 20000;
+            targetTime = Date.now() + 1000;
             timerLoop = setInterval(() => {
                 timer.textContent = twoDecimal.format(((targetTime - Date.now()) / 1000));
                 timer.style.left = `${position}px`;
@@ -225,7 +226,7 @@
                 if (index < slides.length - 1) {
                     index++;
                     position = d * index;
-                    targetTime += 20000;
+                    targetTime += 1000;
                     mainContent.scrollLeft = position;
                 }
                 else {
@@ -233,10 +234,10 @@
                     stopTimer();
                     setEndEvent();
                 }
-            }, 20000);
+            }, 1000);
         }
         function setStartEvent(e) {
-            if (e.key == "Enter") {
+            if ((e && e.key == "Enter") || (!e)) {
                 startTimer();
 
                 window.removeEventListener("keydown", setStartEvent);
@@ -244,7 +245,7 @@
             }
         }
         function setEndEvent(e) {
-            if (e.key == "Enter") {
+            if ((e && e.key == "Enter") || (!e)) {
                 stopTimer();
                 window.removeEventListener("keydown", setEndEvent);
                 window.addEventListener("keydown", setStartEvent);
