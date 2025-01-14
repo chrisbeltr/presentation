@@ -217,16 +217,16 @@
             mainContent.scrollLeft = position;
             mainContent.style.overflowX = "hidden";
             mainContent.style.scrollBehavior = "smooth";
-            targetTime = Date.now() + 1000;
+            targetTime = Date.now() + 20000;
             timerLoop = setInterval(() => {
-                timer.textContent = twoDecimal.format(((targetTime - Date.now()) / 1000));
+                timer.textContent = twoDecimal.format(((targetTime - Date.now()) / 20000));
                 timer.style.left = `${position}px`;
             }, 0);
             mainLoop = setInterval(() => {
                 if (index < slides.length - 1) {
                     index++;
                     position = d * index;
-                    targetTime += 1000;
+                    targetTime += 20000;
                     mainContent.scrollLeft = position;
                 }
                 else {
@@ -234,7 +234,7 @@
                     stopTimer();
                     setEndEvent();
                 }
-            }, 1000);
+            }, 20000);
         }
         function setStartEvent(e) {
             if ((e && e.key == "Enter") || (!e)) {
